@@ -1,0 +1,68 @@
+{%extends "navbar.html" %} 
+{%block page%} 
+<section class="h-100 h-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-6">
+          <div class="card rounded-3">
+            <img src="{{ url_for('static', filename='img/professor.avif') }}"
+              class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+              alt="Sample photo">
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4">Enter Professor Info</h3>
+  
+              <form class="px-md-2 needs-validation" action="{{ url_for('register_professor') }}" method="post" novalidate>
+  
+                <div class="row">
+
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline ">
+                        <input type="text" id="name" class="form-control" name="name" required/>
+                        <label class="form-label" for="name">Name</label>
+                        <div class="invalid-feedback">
+                          Name is required!
+                        </div>                  
+                      </div>  
+                  </div>
+                  <div class="col-md-6 mb-4">  
+                    <select class="form-select" id="course_id" name="course_id" required>
+                        {% for course in courses %}
+                      <option value="{{ course[0] }}">{{ course[1] }}</option>
+                      {% endfor %}
+                    </select>  
+                    <label class="form-label" for="course_id">Select Course</label>
+                    <div class="invalid-feedback">
+                      Select a valid course!
+                    </div>     
+                  </div>
+
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="email" id="email" name="email"  class="form-control" required/>
+                    <label class="form-label" for="email">Email</label>
+                    <div class="invalid-feedback">
+                      Enter a valid email!
+                    </div>  
+                </div>
+  
+                <div class="form-outline mb-4">
+                  <input type="password" id="password" name="password"  class="form-control" required/>
+                  <label class="form-label" for="password">Password</label>
+                  <div class="invalid-feedback">
+                    Password is required!
+                  </div>
+                </div>
+  
+                <button type="submit" class="btn btn-success me-2">Submit</button>
+                <a href="{{url_for('home')}}" class="btn btn-outline-danger">Cancel</a>
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+{% endblock %}

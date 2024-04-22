@@ -1,0 +1,87 @@
+{%extends "base.html" %} 
+{%block content%} 
+
+<section class="vh-100">
+      
+        <div class="container py-5 h-100">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+              <div class="card" style="border-radius: 1rem;">
+                <div class="row g-0">
+                  <div class="col-md-6 col-lg-5 d-none d-md-block">
+                    <img src="{{ url_for('static', filename='img/login_img.webp') }}"
+                      alt="Login Image" class="img-fluid" style="width: 100%; height: 100%; border-radius: 1rem 0 0 1rem;" />
+                  </div>
+                  <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                    <div class="card-body p-4 p-lg-5 text-black">
+      
+                      <form class="needs-validation" action="{{ url_for('login') }}" method="post" novalidate>
+
+                        <div class="d-flex align-items-center mb-3 pb-1">
+                          <img src="{{ url_for('static', filename='img/login_logo.jpg') }}" alt="Logo" width="300" height="50" class="d-inline-block align-text-top">
+                        </div>
+      
+                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;" id="login-message">Login into professor dashboard.</h5>
+      
+                        <div class="form-outline mb-4">
+                          <label class="form-label" for="email">Email Address</label>
+                          <input type="email" id="email" name="email" class="form-control form-control-lg" required/>
+                          <div class="invalid-feedback">
+                            A valid email is required!
+                          </div> 
+                        </div>
+      
+                        <div class="form-outline mb-4">
+                          <label class="form-label" for="password">Password</label>
+                          <input type="password" id="password" name="password" class="form-control form-control-lg" required/>
+                          <div class="invalid-feedback">
+                            Password is required!
+                          </div> 
+                        </div>
+      
+                        <div class="pt-1 mb-4">
+                          <button class="btn btn-success btn-lg btn-block" type="submit">Login</button>
+                        </div>
+                        <input type="hidden" id="user-type-value" name="user-type-value" value="professor">
+                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Login in as a <span id="user-type">student</span>?&nbsp;
+                          <a href="/" id="change-user-type" style="color: #393f81;">Click here</a>
+                        </p>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</section>
+<script>
+  document.getElementById("change-user-type").addEventListener("click", function(event) {
+      event.preventDefault(); // Prevent the default behavior of the anchor tag
+      var userType = document.getElementById("user-type");
+      var userTypeValue = document.getElementById("user-type-value");
+      var loginMessage = document.getElementById("login-message");
+      
+      if (userType.innerText === "student") {
+          loginMessage.innerText = "Login into student dashboard."
+          userType.innerText = "professor";
+          userTypeValue.value = "student"; // Update login_type value
+      } else {
+          loginMessage.innerText = "Login into professor dashboard."
+          userType.innerText = "student";
+          userTypeValue.value = "professor"; // Update login_type value
+      }
+  });
+</script>
+    
+{% endblock %}

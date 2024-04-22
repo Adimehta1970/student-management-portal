@@ -1,0 +1,42 @@
+{% extends "navbar.html" %} 
+{% block page %}
+<div class="container mt-4">
+<h2>Hi! {{current_user.name}}</h2>
+{% if student_info.items()|length > 0 %}
+<h5 class="mt-4">Select the students to enroll and submit.</h5>
+<form action="{{ url_for('enroll_student') }}" method="post">  
+<table class="table table-info table-striped table-hover mt-4">
+    <thead>
+      <tr>        
+        <th scope="col">Student Name</th>
+        <th scope="col">Registration Number</th>
+        <th scope="col">Student Contact</th>
+        <th scope="col">Enroll</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student_id, student_details in student_info.items() %}
+      <tr>
+          <td>{{ student_details['student_name'] }}</td>
+          <td >{{ student_id }}</td>
+          <td>{{ student_details['student_email'] }}</td>
+          <td><input class="form-check-input" type="checkbox" name="enroll_students" value="{{student_id}}"  id="flexCheckDefault"></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-end">
+    <a href="{{url_for('home')}}" class="btn btn-outline-danger me-2">Cancel</a>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </div>
+</form>
+{% else %}
+<div class="container mt-6">
+  <div class="alert alert-info mt-6" role="alert">
+    No students to enroll. <a href="#" class="alert-link">Click here</a> to register a new student.
+  </div>  
+  <a href="{{url_for('home')}}" class="btn btn-success">Back To Dashboard</a>
+</div>
+{% endif %}
+</div> 
+{% endblock %}
